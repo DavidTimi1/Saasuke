@@ -4,7 +4,7 @@ HOST = os.environ.get("host")
 
 bot_token = os.environ.get("tg-bot-token")
 hook_secret = os.environ.get("tg-webhook-secret")
-hook_url = HOST + "/tg_bot/webhook"
+hook_url = HOST + "/tg-bot/webhook"
 
 gemini_api = os.environ.get("gemini-api")
 

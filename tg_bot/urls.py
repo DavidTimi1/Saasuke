@@ -5,5 +5,5 @@ app_name = "tg-bot"
 
 urlpatterns = [
     path('', views.index, name="index"),
-    path("hook", views.webhook, name="hook"),
+    path("webhook", views.webhook, name="hook"),
 ]

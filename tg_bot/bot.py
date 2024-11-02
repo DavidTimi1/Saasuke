@@ -96,5 +96,5 @@ def abs_path(x):
 
 
 bot.remove_webhook()
-# bot.set_webhook(hook_url, secret_token=hook_secret)
+bot.set_webhook(hook_url, secret_token=hook_secret)
 # bot.infinity_polling()
