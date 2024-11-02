@@ -2,7 +2,6 @@ import os
 
 import telebot
 from telebot.types import InlineKeyboardMarkup, InlineKeyboardButton
-from json import loads as json_loads, dumps as json_dumps
 
 from .gemini import ask_gemini
 from .settings import *
@@ -93,8 +92,3 @@ def delete_file(name):
 
 def abs_path(x):
     return os.path.abspath(x)
-
-
-bot.remove_webhook()
-bot.set_webhook(hook_url, secret_token=hook_secret)
-# bot.infinity_polling()
