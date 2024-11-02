@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Google Sign-In with Django</title>
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
+</head>
+<body>
+  <div id="g_id_onload"
+      data-auto_prompt
+      data-auto_select
+       data-client_id={{ client_id }}
+       data-context="signin"
+       data-callback="handleCredentialResponse">
+  </div>
+
+  <div class="g_id_signin" data-type="standard"></div>
+
+  <script>
+    function handleCredentialResponse(response) {
+      // Send the ID token to the backend
+      fetch('/google-signin/', {
+        method: 'POST',
+        // headers: {
+        //   'Content-Type': 'application/json',
+        //   'X-CSRFToken': getCookie('csrftoken')  // Django CSRF token
+        // },
+        body: JSON.stringify({ token: response.credential })
+      })
+      .then(response => response.json())
+      .then(data => {
+        if (data.success) {
+          alert("User signed in successfully!");
+          console.log(data.data)
+          // You can redirect the user or update the UI here
+        } else {
+          alert("Failed to sign in!");
+        }
+      })
+      .catch(error => console.error('Error:', error));
+    }
+
+    // CSRF token helper for Django
+    // function getCookie(name) {
+    //   let cookieValue = null;
+    //   if (document.cookie && document.cookie !== '') {
+    //     const cookies = document.cookie.split(';');
+    //     for (let i = 0; i < cookies.length; i++) {
+    //       const cookie = cookies[i].trim();
+    //       if (cookie.substring(0, name.length + 1) === (name + '=')) {
+    //         cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+    //         break;
+    //       }
+    //     }
+    //   }
+    //   return cookieValue;
+    // }
+  </script>
+</body>
+</html>
