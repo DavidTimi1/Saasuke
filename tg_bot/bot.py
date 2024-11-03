@@ -1,6 +1,6 @@
 import os
-
 import telebot
+
 from telebot.types import InlineKeyboardMarkup, InlineKeyboardButton
 
 from .gemini import ask_gemini
@@ -51,8 +51,10 @@ def ai_reply(message):
     history = retrieve_chat_history(username)
 
     response = ask_gemini(message.text, history)
+    print(response)
 
     save_chat_state(username, history[-2:])
+    print("Saved history")
 
     bot.reply_to(message, response)
 
