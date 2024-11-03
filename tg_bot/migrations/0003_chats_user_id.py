@@ -13,7 +13,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='chats',
             name='user_id',
-            field=models.BigIntegerField(default='@@@'),
+            field=models.BigIntegerField(),
             preserve_default=False,
         ),
     ]
