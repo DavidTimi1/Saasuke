@@ -19,8 +19,9 @@
 
   <script>
     function handleCredentialResponse(response) {
+      console.log(response);
       // Send the ID token to the backend
-      fetch('/google-signin/', {
+      fetch('/auth/google-signin/', {
         method: 'POST',
         // headers: {
         //   'Content-Type': 'application/json',
