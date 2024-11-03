@@ -37,32 +37,31 @@ def help(message):
 
 @bot.message_handler(commands=['clear'])
 def clear(message):
-    person = message.from_user
-    username = person.username
+    user_id = message.from_user.id
 
-    delete_file(username)
+    delete_chats(user_id)
     # delete messages too
 
 
 @bot.message_handler(func=lambda msg: True)
 def ai_reply(message):
     person = message.from_user
-    username = person.username
-    history = retrieve_chat_history(username)
+    print(message.text)
+    history = retrieve_chat_history(person)
 
     response = ask_gemini(message.text, history)
     print(response)
 
-    save_chat_state(username, history[-2:])
+    save_chat_state(person.id, history[-2:])
     print("Saved history")
 
     bot.reply_to(message, response)
 
 
 
-def retrieve_chat_history(name):
+def retrieve_chat_history(user):
     history = []
-    chat, created = Chats.objects.get_or_create(username=name)
+    chat, created = Chats.objects.get_or_create(username=user.username, user_id=user.id)
 
     if not created:
         for message in chat.messages.all():
@@ -73,8 +72,8 @@ def retrieve_chat_history(name):
     return history
 
 
-def save_chat_state(name, entries):
-    chat = Chats.objects.get(username=name)
+def save_chat_state(user_id, entries):
+    chat = Chats.objects.get(user_id=user_id)
     file = text = None
 
     for entry in entries:
@@ -89,8 +88,6 @@ def save_chat_state(name, entries):
     
 
 
-def delete_file(name):
-    os.remove(f"chats/{name}.json")
-
-def abs_path(x):
-    return os.path.abspath(x)
+def delete_chats(user_id):
+    chat = Chats.objects.get(user_id=user_id)
+    chat.clear()
