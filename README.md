@@ -7,3 +7,4 @@ Routes
    /auth/google-signin
 2. /feedback
 3. /tg-bot
+4. /wa-bot
